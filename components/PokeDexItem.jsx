@@ -3,7 +3,6 @@ import { View, Pressable, Image, Text, StyleSheet } from "react-native";
 function PokeDexItem(props) {
   const { pokemonName, pokemonImage, pokemonData } = props;
 
-  // console.log("pokemon", pokemonImage, pokemonName);
   return (
     <Pressable
       android_ripple={"#334c54"}

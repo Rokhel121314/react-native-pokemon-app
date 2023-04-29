@@ -14,16 +14,12 @@ function PokemonContext({ children }) {
   const [previousPokemonURLs, setPreviousPokemonURLs] = useState("");
   const [pokeDexData, setPokeDexData] = useState([]);
 
-  // console.log("test", pokeDexData);
-
   const getPokemonURL = async () => {
     try {
-      setIsLoading(true);
       const { data } = await Axios.get(pokemonURLs);
       getPokeDexData(data.results);
       setNextPokemonURLs(data.next);
       setPreviousPokemonURLs(data.previous);
-      setIsLoading(false);
     } catch (error) {
       console.error("error", error);
     }
