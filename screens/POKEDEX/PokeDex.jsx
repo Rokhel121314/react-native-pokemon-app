@@ -5,6 +5,8 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  Button,
+  TouchableOpacity,
 } from "react-native";
 
 // Flatlist Component
@@ -15,9 +17,14 @@ import LoadMore from "../../components/LoadMore";
 import { Context } from "../../contextApi";
 
 export default function PokeDex() {
-  const { pokeDexData, isLoading, getMorePokeDexData } = useContext(Context);
-
-  console.log("lenght", pokeDexData.length - 1);
+  const {
+    pokeDexData,
+    isLoading,
+    getNextPokemonData,
+    getPreviousPokemonData,
+    previousPokemonURLs,
+  } = useContext(Context);
+  const flatListData = [...pokeDexData];
 
   if (isLoading) {
     return (
@@ -31,7 +38,7 @@ export default function PokeDex() {
     <View style={styles.pokeDexContainer}>
       <FlatList
         contentContainerStyle={{}}
-        data={pokeDexData}
+        data={flatListData}
         renderItem={({ item, index }) => (
           <>
             <PokeDexItem
@@ -39,17 +46,30 @@ export default function PokeDex() {
               pokemonImage={item.sprites.front_default}
               pokemonData={item}
             />
-            {pokeDexData.length === index + 1 ? (
-              <LoadMore getMorePokeDexData={getMorePokeDexData} index={index} />
-            ) : (
-              ""
-            )}
           </>
         )}
         keyExtractor={(item) => item.id}
         numColumns={3}
         style={styles.pokeDexFlatList}
       />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => getPreviousPokemonData()}>
+          {previousPokemonURLs === null ? (
+            ""
+          ) : (
+            <View style={styles.backButton}>
+              <Text style={styles.backButtonText}>
+                {previousPokemonURLs === null ? "" : "BACK"}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => getNextPokemonData()}>
+          <View style={styles.nextButton}>
+            <Text style={styles.nextButtonText}>NEXT</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -63,8 +83,37 @@ const styles = StyleSheet.create({
 
   pokeDexContainer: {
     flex: 1,
-    flexDirection: "row",
     marginBottom: 90,
     justifyContent: "center",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 10,
+    backgroundColor: "none",
+  },
+  nextButton: {
+    backgroundColor: "green",
+    paddingVertical: 10,
+    paddingLeft: 20,
+    paddingRight: 70,
+    borderBottomRightRadius: 50,
+    borderTopRightRadius: 50,
+  },
+  nextButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  backButton: {
+    backgroundColor: "red",
+    paddingVertical: 10,
+    paddingLeft: 70,
+    paddingRight: 20,
+    borderBottomLeftRadius: 50,
+    borderTopLeftRadius: 50,
+  },
+  backButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

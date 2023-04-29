@@ -11,6 +11,7 @@ function PokemonContext({ children }) {
     "https://pokeapi.co/api/v2/pokemon/"
   );
   const [nextPokemonURLs, setNextPokemonURLs] = useState("");
+  const [previousPokemonURLs, setPreviousPokemonURLs] = useState("");
   const [pokeDexData, setPokeDexData] = useState([]);
 
   // console.log("test", pokeDexData);
@@ -21,6 +22,7 @@ function PokemonContext({ children }) {
       const { data } = await Axios.get(pokemonURLs);
       getPokeDexData(data.results);
       setNextPokemonURLs(data.next);
+      setPreviousPokemonURLs(data.previous);
       setIsLoading(false);
     } catch (error) {
       console.error("error", error);
@@ -45,8 +47,18 @@ function PokemonContext({ children }) {
     });
   };
 
-  const getMorePokeDexData = () => {
+  const getNextPokemonData = () => {
+    setPokeDexData([]);
     setPokemonURLs(nextPokemonURLs);
+  };
+
+  const getPreviousPokemonData = () => {
+    if (!previousPokemonURLs) {
+      alert("no more data");
+    } else {
+      setPokeDexData([]);
+      setPokemonURLs(previousPokemonURLs);
+    }
   };
 
   useEffect(() => {
@@ -54,7 +66,14 @@ function PokemonContext({ children }) {
   }, [pokemonURLs]);
 
   return (
-    <Context.Provider value={{ pokeDexData, isLoading, getMorePokeDexData }}>
+    <Context.Provider
+      value={{
+        pokeDexData,
+        isLoading,
+        getNextPokemonData,
+        getPreviousPokemonData,
+        previousPokemonURLs,
+      }}>
       {children}
     </Context.Provider>
   );
