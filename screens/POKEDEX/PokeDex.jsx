@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import { useContext } from "react";
 import {
   View,
   Text,
@@ -6,13 +6,18 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
+
+// Flatlist Component
 import PokeDexItem from "../../components/PokeDexItem";
+import LoadMore from "../../components/LoadMore";
+
+// CONTEXT API
 import { Context } from "../../contextApi";
 
 export default function PokeDex() {
-  const { pokeDexData, isLoading } = useContext(Context);
+  const { pokeDexData, isLoading, getMorePokeDexData } = useContext(Context);
 
-  console.log("lenght", pokeDexData.length);
+  console.log("lenght", pokeDexData.length - 1);
 
   if (isLoading) {
     return (
@@ -25,6 +30,7 @@ export default function PokeDex() {
   return (
     <View style={styles.pokeDexContainer}>
       <FlatList
+        contentContainerStyle={{}}
         data={pokeDexData}
         renderItem={({ item, index }) => (
           <>
@@ -33,7 +39,11 @@ export default function PokeDex() {
               pokemonImage={item.sprites.front_default}
               pokemonData={item}
             />
-            {index === pokeDexData.length - 1 ? <Text>Load More</Text> : ""}
+            {pokeDexData.length === index + 1 ? (
+              <LoadMore getMorePokeDexData={getMorePokeDexData} index={index} />
+            ) : (
+              ""
+            )}
           </>
         )}
         keyExtractor={(item) => item.id}

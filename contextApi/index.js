@@ -7,16 +7,20 @@ function PokemonContext({ children }) {
   // getting pokemon datas
 
   const [isLoading, setIsLoading] = useState(false);
-  const [pokemonURLs, setPokemonURLs] = useState([]);
+  const [pokemonURLs, setPokemonURLs] = useState(
+    "https://pokeapi.co/api/v2/pokemon/"
+  );
+  const [nextPokemonURLs, setNextPokemonURLs] = useState("");
   const [pokeDexData, setPokeDexData] = useState([]);
+
   // console.log("test", pokeDexData);
 
   const getPokemonURL = async () => {
     try {
       setIsLoading(true);
-      const { data } = await Axios.get("https://pokeapi.co/api/v2/pokemon/");
-      setPokemonURLs(data.results);
+      const { data } = await Axios.get(pokemonURLs);
       getPokeDexData(data.results);
+      setNextPokemonURLs(data.next);
       setIsLoading(false);
     } catch (error) {
       console.error("error", error);
@@ -41,12 +45,16 @@ function PokemonContext({ children }) {
     });
   };
 
+  const getMorePokeDexData = () => {
+    setPokemonURLs(nextPokemonURLs);
+  };
+
   useEffect(() => {
     getPokemonURL();
-  }, []);
+  }, [pokemonURLs]);
 
   return (
-    <Context.Provider value={{ pokeDexData, isLoading }}>
+    <Context.Provider value={{ pokeDexData, isLoading, getMorePokeDexData }}>
       {children}
     </Context.Provider>
   );
