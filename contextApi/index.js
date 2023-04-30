@@ -7,17 +7,19 @@ function PokemonContext({ children }) {
   // getting pokemon datas
 
   const [isLoading, setIsLoading] = useState(false);
-  const [pokemonURLs, setPokemonURLs] = useState([]);
+  const [pokemonURLs, setPokemonURLs] = useState(
+    "https://pokeapi.co/api/v2/pokemon/"
+  );
+  const [nextPokemonURLs, setNextPokemonURLs] = useState("");
+  const [previousPokemonURLs, setPreviousPokemonURLs] = useState("");
   const [pokeDexData, setPokeDexData] = useState([]);
-  // console.log("test", pokeDexData);
 
   const getPokemonURL = async () => {
     try {
-      setIsLoading(true);
-      const { data } = await Axios.get("https://pokeapi.co/api/v2/pokemon/");
-      setPokemonURLs(data.results);
+      const { data } = await Axios.get(pokemonURLs);
       getPokeDexData(data.results);
-      setIsLoading(false);
+      setNextPokemonURLs(data.next);
+      setPreviousPokemonURLs(data.previous);
     } catch (error) {
       console.error("error", error);
     }
@@ -41,12 +43,33 @@ function PokemonContext({ children }) {
     });
   };
 
+  const getNextPokemonData = () => {
+    setPokeDexData([]);
+    setPokemonURLs(nextPokemonURLs);
+  };
+
+  const getPreviousPokemonData = () => {
+    if (!previousPokemonURLs) {
+      alert("no more data");
+    } else {
+      setPokeDexData([]);
+      setPokemonURLs(previousPokemonURLs);
+    }
+  };
+
   useEffect(() => {
     getPokemonURL();
-  }, []);
+  }, [pokemonURLs]);
 
   return (
-    <Context.Provider value={{ pokeDexData, isLoading }}>
+    <Context.Provider
+      value={{
+        pokeDexData,
+        isLoading,
+        getNextPokemonData,
+        getPreviousPokemonData,
+        previousPokemonURLs,
+      }}>
       {children}
     </Context.Provider>
   );

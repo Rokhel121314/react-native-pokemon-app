@@ -32,8 +32,8 @@ function Tabs() {
           elevation: 0,
           backgroundColor: "#FF0000",
           height: 90,
-          borderTopEndRadius: 20,
-          borderTopStartRadius: 20,
+          // borderTopEndRadius: 20,
+          // borderTopStartRadius: 20,
         },
       }}>
       <Tab.Screen

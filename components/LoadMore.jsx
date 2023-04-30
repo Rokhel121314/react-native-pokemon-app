@@ -1,15 +1,14 @@
-import { View, Pressable, Image, Text, StyleSheet } from "react-native";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 
-function PokeDexItem(props) {
-  const { pokemonName, pokemonImage, pokemonData } = props;
-
+function LoadMore({ getMorePokeDexData, index }) {
+  console.log("index", index);
   return (
     <Pressable
-      android_ripple={"#334c54"}
       style={styles.flatListContainer}
-      onPress={() => alert(pokemonName)}>
-      <Image source={{ uri: pokemonImage }} style={styles.pokemonImage} />
-      <Text style={styles.pokemonName}>{pokemonName}</Text>
+      onPress={() => getMorePokeDexData()}>
+      <View>
+        <Text>LOAD MORE</Text>
+      </View>
     </Pressable>
   );
 }
@@ -25,6 +24,8 @@ const styles = StyleSheet.create({
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
+    position: "absolute",
+    left: 260,
   },
   pokemonImage: {
     resizeMode: "contain",
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PokeDexItem;
+export default LoadMore;
