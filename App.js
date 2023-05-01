@@ -25,9 +25,17 @@ export default function App() {
           <Stack.Screen
             name="pokemonDetail"
             component={PokemonDetail}
-            options={{
-              headerTitle: "POKEMON NAME",
-            }}
+            options={({ route }) => ({
+              title: route.params.pokemonName.toUpperCase(),
+              headerTitleAlign: "center",
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "black",
+              },
+              headerTitleStyle: {
+                color: "white",
+              },
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>

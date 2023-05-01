@@ -7,12 +7,14 @@ function PokemonContext({ children }) {
   // getting pokemon datas
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingDescription, setLoadingDescription] = useState(false);
   const [pokemonURLs, setPokemonURLs] = useState(
     "https://pokeapi.co/api/v2/pokemon/"
   );
   const [nextPokemonURLs, setNextPokemonURLs] = useState("");
   const [previousPokemonURLs, setPreviousPokemonURLs] = useState("");
   const [pokeDexData, setPokeDexData] = useState([]);
+  const [description, setDescription] = useState("");
 
   const getPokemonURL = async () => {
     try {
@@ -61,6 +63,21 @@ function PokemonContext({ children }) {
     getPokemonURL();
   }, [pokemonURLs]);
 
+  // getting pokemon description
+
+  const getPokemonDescription = async (id) => {
+    try {
+      setLoadingDescription(true);
+      const { data } = await Axios.get(
+        `https://pokeapi.co/api/v2/pokemon-species/${id}/`
+      );
+      setDescription(data.flavor_text_entries[0].flavor_text);
+      setLoadingDescription(false);
+    } catch (error) {
+      console.error("error", error);
+      setLoadingDescription(false);
+    }
+  };
   return (
     <Context.Provider
       value={{
@@ -69,6 +86,9 @@ function PokemonContext({ children }) {
         getNextPokemonData,
         getPreviousPokemonData,
         previousPokemonURLs,
+        getPokemonDescription,
+        description,
+        loadingDescription,
       }}>
       {children}
     </Context.Provider>

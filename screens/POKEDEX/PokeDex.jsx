@@ -16,6 +16,7 @@ export default function PokeDex() {
     getNextPokemonData,
     getPreviousPokemonData,
     previousPokemonURLs,
+    navigateToDetails,
   } = useContext(Context);
   const flatListData = [...pokeDexData];
 
