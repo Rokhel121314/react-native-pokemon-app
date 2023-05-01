@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
     width: 115,
     height: 115,
     margin: 8,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
   },
   pokemonImage: {
     resizeMode: "contain",
-    width: 110,
-    height: 110,
+    width: 100,
+    height: 100,
     position: "relative",
   },
   pokemonName: {

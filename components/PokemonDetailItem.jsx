@@ -2,6 +2,7 @@ import { useRoute } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Context } from "../contextApi";
 import { useContext } from "react";
+import { all } from "axios";
 
 function PokemonDetailItem() {
   const route = useRoute();
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     transform: [{ scaleX: 5 }],
     zIndex: -1,
-    top: 235,
+    top: 255,
   },
   nameContainer: {
     flex: 1,

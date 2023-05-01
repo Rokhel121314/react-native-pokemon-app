@@ -36,7 +36,7 @@ export default function PokeDex() {
         renderItem={({ item }) => (
           <PokeDexItem
             pokemonName={item.name}
-            pokemonImage={item.sprites.front_default}
+            pokemonImage={item.sprites.other.home.front_default}
             pokemonData={item}
           />
         )}
