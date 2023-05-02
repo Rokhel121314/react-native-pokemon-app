@@ -2,19 +2,19 @@ import { useRoute } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Context } from "../contextApi";
 import { useContext } from "react";
-import { all } from "axios";
+import PokemonType from "./PokemonType";
 
 function PokemonDetailItem() {
   const route = useRoute();
   const { pokemonData, pokemonName, pokemonImage } = route.params;
   const type = pokemonData.types.map((type) => type.type.name);
-  const { description, loadingDescription } = useContext(Context);
+  const { description, loadingDescription, catchPokemon } = useContext(Context);
 
   return (
     <View style={styles.pokemonDetailContainer}>
       <View style={styles.imageContainer}>
         <Image
-          style={{ resizeMode: "contain", height: "100%", width: "100%" }}
+          style={{ resizeMode: "contain", height: "90%", width: "90%" }}
           source={{ uri: pokemonImage }}
         />
         <View style={styles.imageShadow}></View>
@@ -28,11 +28,7 @@ function PokemonDetailItem() {
         {!type
           ? null
           : type.map((type, index) => {
-              return (
-                <View style={styles.typeButton} key={index}>
-                  <Text style={styles.typeText}>{type.toUpperCase()}</Text>
-                </View>
-              );
+              return <PokemonType type={type} index={index} key={index} />;
             })}
       </View>
 
@@ -45,7 +41,13 @@ function PokemonDetailItem() {
       </View>
 
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={styles.catchBtn}>
+        <TouchableOpacity
+          style={styles.catchBtn}
+          onPress={() => catchPokemon()}>
+          <Image
+            source={require("../assets/images/pokeball.png")}
+            style={{ resizeMode: "contain", height: 100, width: 100 }}
+          />
           <Text style={styles.catchText}>CATCH</Text>
         </TouchableOpacity>
       </View>
@@ -91,19 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  typeButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: "black",
-    borderRadius: 10,
-    marginHorizontal: 10,
-  },
-  typeText: {
-    fontSize: 22,
-    fontWeight: 600,
-    color: "white",
-    letterSpacing: 2,
-  },
+
   descriptionContainer: {
     flex: 2,
     paddingHorizontal: 20,
@@ -122,14 +112,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   catchBtn: {
-    backgroundColor: "rgba(255,2,2, .7)",
-    borderRadius: 30,
+    // backgroundColor: "rgba(255,2,2, .7)",
+    // borderRadius: 30,
+    alignItems: "center",
   },
   catchText: {
     paddingHorizontal: 20,
     paddingVertical: 10,
-    color: "white",
-    fontSize: 32,
+    color: "black",
+    fontSize: 16,
     fontWeight: 800,
     letterSpacing: 3,
   },

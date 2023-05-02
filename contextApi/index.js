@@ -78,6 +78,22 @@ function PokemonContext({ children }) {
       setLoadingDescription(false);
     }
   };
+
+  // catching pokemon
+  // range 1-100
+  const catchPokemon = (id) => {
+    const catchChance = Math.ceil(Math.random() * 100);
+    console.log("catchChance", catchChance);
+    if (catchChance > 90) {
+      alert("congrats you catchted pikachu");
+    } else if (catchChance <= 90 && catchChance > 70) {
+      alert("you almost caught pikachu");
+    } else if (catchChance <= 70 && catchChance > 50) {
+      alert("wild pikachu break free");
+    } else if (catchChance <= 50) {
+      alert("wild pikachu run away");
+    }
+  };
   return (
     <Context.Provider
       value={{
@@ -89,6 +105,7 @@ function PokemonContext({ children }) {
         getPokemonDescription,
         description,
         loadingDescription,
+        catchPokemon,
       }}>
       {children}
     </Context.Provider>
