@@ -16,8 +16,6 @@ function Tabs() {
         headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: "black",
-          // borderBottomLeftRadius: 20,
-          // borderBottomRightRadius: 20,
           height: 90,
         },
         headerTitleStyle: {
@@ -32,8 +30,6 @@ function Tabs() {
           elevation: 0,
           backgroundColor: "#FF0000",
           height: 90,
-          // borderTopEndRadius: 20,
-          // borderTopStartRadius: 20,
         },
       }}>
       <Tab.Screen
