@@ -15,6 +15,11 @@ function PokemonContext({ children }) {
   const [previousPokemonURLs, setPreviousPokemonURLs] = useState("");
   const [pokeDexData, setPokeDexData] = useState([]);
   const [description, setDescription] = useState("");
+  const [catching, setCatching] = useState(false);
+  const [catchStatus, setCatchStatus] = useState("");
+
+  // console.log("catchStatus", catchStatus);
+  // console.log("catching?", catching);
 
   const getPokemonURL = async () => {
     try {
@@ -83,17 +88,42 @@ function PokemonContext({ children }) {
   // range 1-100
   const catchPokemon = (id) => {
     const catchChance = Math.ceil(Math.random() * 100);
-    console.log("catchChance", catchChance);
+
     if (catchChance > 90) {
-      alert("congrats you catchted pikachu");
+      setCatchStatus("");
+      setCatching(true);
+      setTimeout(() => {
+        setCatching(false);
+        setCatchStatus("catched");
+        alert("catched");
+      }, 12000);
     } else if (catchChance <= 90 && catchChance > 70) {
-      alert("you almost caught pikachu");
+      setCatchStatus("");
+      setCatching(true);
+      setTimeout(() => {
+        setCatching(false);
+        setCatchStatus("almost");
+        alert("almost");
+      }, 12000);
     } else if (catchChance <= 70 && catchChance > 50) {
-      alert("wild pikachu break free");
+      setCatchStatus("");
+      setCatching(true);
+      setTimeout(() => {
+        setCatching(false);
+        setCatchStatus("barely");
+        alert("barely");
+      }, 12000);
     } else if (catchChance <= 50) {
-      alert("wild pikachu run away");
+      setCatchStatus("");
+      setCatching(true);
+      setTimeout(() => {
+        setCatching(false);
+        setCatchStatus("run");
+        alert("run");
+      }, 12000);
     }
   };
+
   return (
     <Context.Provider
       value={{
@@ -106,6 +136,8 @@ function PokemonContext({ children }) {
         description,
         loadingDescription,
         catchPokemon,
+        catchStatus,
+        catching,
       }}>
       {children}
     </Context.Provider>

@@ -8,15 +8,29 @@ function PokemonDetailItem() {
   const route = useRoute();
   const { pokemonData, pokemonName, pokemonImage } = route.params;
   const type = pokemonData.types.map((type) => type.type.name);
-  const { description, loadingDescription, catchPokemon } = useContext(Context);
+  const {
+    description,
+    loadingDescription,
+    catchPokemon,
+    catching,
+    catchStatus,
+  } = useContext(Context);
 
   return (
     <View style={styles.pokemonDetailContainer}>
       <View style={styles.imageContainer}>
-        <Image
-          style={{ resizeMode: "contain", height: "90%", width: "90%" }}
-          source={{ uri: pokemonImage }}
-        />
+        {catching ? (
+          <Image
+            style={{ resizeMode: "contain", height: "60%", width: "60%" }}
+            source={require("../assets/images/catching-animation2.gif")}
+          />
+        ) : (
+          <Image
+            style={{ resizeMode: "contain", height: "90%", width: "90%" }}
+            source={{ uri: pokemonImage }}
+          />
+        )}
+
         <View style={styles.imageShadow}></View>
       </View>
 
