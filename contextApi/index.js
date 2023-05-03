@@ -17,6 +17,7 @@ function PokemonContext({ children }) {
   const [description, setDescription] = useState("");
   const [catching, setCatching] = useState(false);
   const [catchStatus, setCatchStatus] = useState("");
+  const [gotResult, setGotResult] = useState(false);
 
   // console.log("catchStatus", catchStatus);
   // console.log("catching?", catching);
@@ -93,35 +94,38 @@ function PokemonContext({ children }) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
-        setCatching(false);
-        setCatchStatus("catched");
-        alert("catched");
-      }, 12000);
-    } else if (catchChance <= 90 && catchChance > 70) {
+        // setCatching(false);
+        setCatchStatus("Gotcha!");
+        setGotResult(true);
+      }, 5000);
+    } else if (catchChance <= 90 && catchChance > 50) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
-        setCatching(false);
-        setCatchStatus("almost");
-        alert("almost");
-      }, 12000);
-    } else if (catchChance <= 70 && catchChance > 50) {
-      setCatchStatus("");
-      setCatching(true);
-      setTimeout(() => {
-        setCatching(false);
-        setCatchStatus("barely");
-        alert("barely");
-      }, 12000);
+        // setCatching(false);
+        setCatchStatus("Broke free!");
+        setGotResult(true);
+      }, 5000);
     } else if (catchChance <= 50) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
-        setCatching(false);
-        setCatchStatus("run");
-        alert("run");
-      }, 12000);
+        // setCatching(false);
+        setCatchStatus("Fled!");
+        setGotResult(true);
+      }, 5000);
     }
+  };
+
+  const closeCatchResultScreen = () => {
+    setGotResult(false);
+    setCatching(false);
+  };
+  const setGotResultToFalse = () => {
+    setGotResult(false);
+  };
+  const setCatchingToFalse = () => {
+    setCatching(false);
   };
 
   return (
@@ -138,6 +142,10 @@ function PokemonContext({ children }) {
         catchPokemon,
         catchStatus,
         catching,
+        gotResult,
+        closeCatchResultScreen,
+        setGotResultToFalse,
+        setCatchingToFalse,
       }}>
       {children}
     </Context.Provider>

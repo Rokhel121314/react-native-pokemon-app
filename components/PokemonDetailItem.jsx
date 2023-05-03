@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Context } from "../contextApi";
 import { useContext } from "react";
 import PokemonType from "./PokemonType";
+import CatchingAnimation from "./CatchingAnimation";
 
 function PokemonDetailItem() {
   const route = useRoute();
@@ -17,55 +18,57 @@ function PokemonDetailItem() {
   } = useContext(Context);
 
   return (
-    <View style={styles.pokemonDetailContainer}>
-      <View style={styles.imageContainer}>
-        {catching ? (
-          <Image
-            style={{ resizeMode: "contain", height: "60%", width: "60%" }}
-            source={require("../assets/images/catching-animation2.gif")}
-          />
-        ) : (
-          <Image
-            style={{ resizeMode: "contain", height: "90%", width: "90%" }}
-            source={{ uri: pokemonImage }}
-          />
-        )}
+    <>
+      {catching ? (
+        <CatchingAnimation
+          pokemonName={pokemonName}
+          catching={catching}
+          pokemonImage={pokemonImage}
+        />
+      ) : (
+        <View style={styles.pokemonDetailContainer}>
+          <View style={styles.imageContainer}>
+            <Image
+              style={{ resizeMode: "contain", height: "90%", width: "90%" }}
+              source={{ uri: pokemonImage }}
+            />
+            <View style={styles.imageShadow}></View>
+          </View>
 
-        <View style={styles.imageShadow}></View>
-      </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameText}>{pokemonName.toUpperCase()}</Text>
+          </View>
 
-      <View style={styles.nameContainer}>
-        <Text style={styles.nameText}>{pokemonName.toUpperCase()}</Text>
-      </View>
+          <View style={styles.typeContainer}>
+            {!type
+              ? null
+              : type.map((type, index) => {
+                  return <PokemonType type={type} index={index} key={index} />;
+                })}
+          </View>
 
-      <View style={styles.typeContainer}>
-        {!type
-          ? null
-          : type.map((type, index) => {
-              return <PokemonType type={type} index={index} key={index} />;
-            })}
-      </View>
+          <View style={styles.descriptionContainer}>
+            {loadingDescription ? (
+              <Text>......</Text>
+            ) : (
+              <Text style={styles.descriptionText}>{`"${description}"`}</Text>
+            )}
+          </View>
 
-      <View style={styles.descriptionContainer}>
-        {loadingDescription ? (
-          <Text>......</Text>
-        ) : (
-          <Text style={styles.descriptionText}>{`"${description}"`}</Text>
-        )}
-      </View>
-
-      <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={styles.catchBtn}
-          onPress={() => catchPokemon()}>
-          <Image
-            source={require("../assets/images/pokeball.png")}
-            style={{ resizeMode: "contain", height: 100, width: 100 }}
-          />
-          <Text style={styles.catchText}>CATCH</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={styles.catchBtn}
+              onPress={() => catchPokemon()}>
+              <Image
+                source={require("../assets/images/pokeball.png")}
+                style={{ resizeMode: "contain", height: 100, width: 100 }}
+              />
+              <Text style={styles.catchText}>CATCH</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </>
   );
 }
 
