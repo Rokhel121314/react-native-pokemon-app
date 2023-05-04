@@ -50,7 +50,7 @@ export default function CatchedResult({ pokemonName, pokemonImage }) {
 const styles = StyleSheet.create({
   catchResultContainer: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "white",
     position: "absolute",
     height: "100%",
     width: "100%",
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   resultText: {
     fontSize: 42,
     fontWeight: 800,
-    color: "white",
+    color: "black",
   },
   imageContainer: {
     flex: 2,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   catchText: {
     fontSize: 24,
-    color: "white",
+    color: "black",
     fontWeight: 600,
     letterSpacing: 2,
   },

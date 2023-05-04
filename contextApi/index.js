@@ -18,6 +18,7 @@ function PokemonContext({ children }) {
   const [catching, setCatching] = useState(false);
   const [catchStatus, setCatchStatus] = useState("");
   const [gotResult, setGotResult] = useState(false);
+  const [catchedPokemonList, setCatchPokemonList] = useState([]);
 
   // console.log("catchStatus", catchStatus);
   // console.log("catching?", catching);
@@ -87,30 +88,29 @@ function PokemonContext({ children }) {
 
   // catching pokemon
   // range 1-100
-  const catchPokemon = (id) => {
+  const catchPokemon = (pokemonData) => {
     const catchChance = Math.ceil(Math.random() * 100);
 
     if (catchChance > 90) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
-        // setCatching(false);
         setCatchStatus("Gotcha!");
         setGotResult(true);
+        setCatchPokemonToList(pokemonData);
       }, 5000);
     } else if (catchChance <= 90 && catchChance > 50) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
-        // setCatching(false);
         setCatchStatus("Broke free!");
         setGotResult(true);
+        setCatchPokemonToList(pokemonData);
       }, 5000);
     } else if (catchChance <= 50) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
-        // setCatching(false);
         setCatchStatus("Fled!");
         setGotResult(true);
       }, 5000);
@@ -126,6 +126,10 @@ function PokemonContext({ children }) {
   };
   const setCatchingToFalse = () => {
     setCatching(false);
+  };
+
+  const setCatchPokemonToList = (pokemonData) => {
+    setCatchPokemonList((pokemon) => [...pokemon, pokemonData]);
   };
 
   return (
@@ -146,6 +150,8 @@ function PokemonContext({ children }) {
         closeCatchResultScreen,
         setGotResultToFalse,
         setCatchingToFalse,
+        setCatchPokemonToList,
+        catchedPokemonList,
       }}>
       {children}
     </Context.Provider>

@@ -58,7 +58,7 @@ function PokemonDetailItem() {
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={styles.catchBtn}
-              onPress={() => catchPokemon()}>
+              onPress={() => catchPokemon(pokemonData)}>
               <Image
                 source={require("../assets/images/pokeball.png")}
                 style={{ resizeMode: "contain", height: 100, width: 100 }}
