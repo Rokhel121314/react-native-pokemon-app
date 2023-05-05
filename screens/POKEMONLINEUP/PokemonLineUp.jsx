@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import PokemonLineUpItem from "../../components/PokemonLineUpItem";
+import PokemonLineUpItem from "../../components/POKEMONLINEUP/PokemonLineUpItem";
 
 export default function PokemonLineUp() {
   return (

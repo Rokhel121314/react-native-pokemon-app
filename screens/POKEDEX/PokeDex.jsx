@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import Loader from "../../components/POKEDEX/Loader";
 
 // Flatlist Component
-import PokeDexItem from "../../components/PokeDexItem";
+import PokeDexItem from "../../components/POKEDEX/PokeDexItem";
 import LoadMore from "../../components/LoadMore";
 
 // CONTEXT API
 import { Context } from "../../contextApi";
-import PreviousNextButton from "../../components/PreviousNextButton";
+import PreviousNextButton from "../../components/POKEDEX/PreviousNextButton";
 
 export default function PokeDex() {
   const {
@@ -23,7 +24,7 @@ export default function PokeDex() {
   if (flatListData.length < 20) {
     return (
       <View style={styles.loader}>
-        <ActivityIndicator color={"white"} size={"large"} />
+        <Loader />
       </View>
     );
   }
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     margin: "auto",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
+    // backgroundColor: "black",
   },
 
   pokeDexContainer: {
