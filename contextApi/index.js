@@ -19,6 +19,7 @@ function PokemonContext({ children }) {
   const [catchStatus, setCatchStatus] = useState("");
   const [gotResult, setGotResult] = useState(false);
   const [catchedPokemonList, setCatchPokemonList] = useState([]);
+  const [isCaught, setIsCaught] = useState("");
 
   // console.log("catchStatus", catchStatus);
   // console.log("catching?", catching);
@@ -90,24 +91,24 @@ function PokemonContext({ children }) {
   // range 1-100
   const catchPokemon = (pokemonData) => {
     const catchChance = Math.ceil(Math.random() * 100);
+    setCatching(false);
 
-    if (catchChance > 90) {
+    if (catchChance > 80) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
         setCatchStatus("Gotcha!");
-        setGotResult(true);
         setCatchPokemonToList(pokemonData);
+        setGotResult(true);
       }, 5000);
-    } else if (catchChance <= 90 && catchChance > 50) {
+    } else if (catchChance <= 80 && catchChance > 40) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
         setCatchStatus("Broke free!");
         setGotResult(true);
-        setCatchPokemonToList(pokemonData);
       }, 5000);
-    } else if (catchChance <= 50) {
+    } else if (catchChance <= 40) {
       setCatchStatus("");
       setCatching(true);
       setTimeout(() => {
@@ -132,6 +133,12 @@ function PokemonContext({ children }) {
     setCatchPokemonList((pokemon) => [...pokemon, pokemonData]);
   };
 
+  // check if the pokemon is already caught
+  const pokemonAlreadyCaught = (pokemonData) => {
+    setIsCaught(
+      catchedPokemonList.map((pokemon) => pokemon.id).includes(pokemonData.id)
+    );
+  };
   return (
     <Context.Provider
       value={{
@@ -152,6 +159,8 @@ function PokemonContext({ children }) {
         setCatchingToFalse,
         setCatchPokemonToList,
         catchedPokemonList,
+        pokemonAlreadyCaught,
+        isCaught,
       }}>
       {children}
     </Context.Provider>

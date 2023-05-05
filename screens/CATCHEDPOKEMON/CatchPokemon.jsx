@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import CatchedPokemonItem from "../../components/CatchedPokemonItem";
 import { Context } from "../../contextApi";
+import CatchedPokemonItem from "../../components/CATCHEDPOKEMON/CatchedPokemonItem";
 
 export default function CatchedPokemon() {
   const { catchedPokemonList } = useContext(Context);
-  console.log(
-    "catchedPokemonList",
-    catchedPokemonList.map((pokemon) => pokemon.name)
-  );
+  // console.log(
+  //   "catchedPokemonList",
+  //   catchedPokemonList.map((pokemon) => pokemon.name)
+  // );
   return (
     <View style={styles.CatchedPokemonContainer}>
       <FlatList

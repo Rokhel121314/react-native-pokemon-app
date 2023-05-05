@@ -1,16 +1,16 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useContext } from "react";
-import { Context } from "../contextApi";
+import { Context } from "../../contextApi";
+import { useNavigation } from "@react-navigation/native";
 
-export default function CatchedResult({ pokemonName, pokemonImage }) {
-  const { catchStatus, closeCatchResultScreen } = useContext(Context);
+export default function CatchedResult({
+  pokemonName,
+  pokemonImage,
+  pokemonData,
+}) {
+  const { catchStatus, closeCatchResultScreen, catchPokemon } =
+    useContext(Context);
+  const navigation = useNavigation();
   return (
     <View style={styles.catchResultContainer}>
       <View style={styles.resultContainer}>
@@ -37,11 +37,33 @@ export default function CatchedResult({ pokemonName, pokemonImage }) {
         ) : null}
       </View>
       <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={styles.closeBtn}
-          onPress={() => closeCatchResultScreen()}>
-          <Text style={styles.closeText}>CLOSE</Text>
-        </TouchableOpacity>
+        {catchStatus === "Gotcha!" ? (
+          <TouchableOpacity
+            style={styles.closeBtn}
+            onPress={() => {
+              navigation.navigate("catchedPokemon");
+              closeCatchResultScreen();
+            }}>
+            <Text style={styles.closeText}>MY POKEMON</Text>
+          </TouchableOpacity>
+        ) : catchStatus === "Broke free!" ? (
+          <TouchableOpacity
+            style={styles.closeBtn}
+            onPress={() => {
+              closeCatchResultScreen();
+            }}>
+            <Text style={styles.closeText}>TRY AGAIN</Text>
+          </TouchableOpacity>
+        ) : catchStatus === "Fled!" ? (
+          <TouchableOpacity
+            style={styles.closeBtn}
+            onPress={() => {
+              navigation.navigate("pokeDex");
+              closeCatchResultScreen();
+            }}>
+            <Text style={styles.closeText}>LEAVE</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );

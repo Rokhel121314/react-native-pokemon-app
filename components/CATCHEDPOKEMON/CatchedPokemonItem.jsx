@@ -8,7 +8,7 @@ function CatchedPokemonItem({ pokemonName, pokemonImage }) {
     setToggle((current) => !current);
   }
 
-  console.log("toggle", toggle);
+  // console.log("toggle", toggle);
   return (
     <View style={styles.catchedPokemonListContainer}>
       <Image

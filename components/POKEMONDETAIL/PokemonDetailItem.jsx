@@ -1,21 +1,16 @@
 import { useRoute } from "@react-navigation/native";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Context } from "../contextApi";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../../contextApi";
+import CatchingAnimation from "../CATCHEDPOKEMON/CatchingAnimation";
 import PokemonType from "./PokemonType";
-import CatchingAnimation from "./CatchingAnimation";
 
 function PokemonDetailItem() {
   const route = useRoute();
   const { pokemonData, pokemonName, pokemonImage } = route.params;
   const type = pokemonData.types.map((type) => type.type.name);
-  const {
-    description,
-    loadingDescription,
-    catchPokemon,
-    catching,
-    catchStatus,
-  } = useContext(Context);
+  const { description, loadingDescription, catchPokemon, catching, isCaught } =
+    useContext(Context);
 
   return (
     <>
@@ -24,6 +19,7 @@ function PokemonDetailItem() {
           pokemonName={pokemonName}
           catching={catching}
           pokemonImage={pokemonImage}
+          pokemonData={pokemonData}
         />
       ) : (
         <View style={styles.pokemonDetailContainer}>
@@ -56,15 +52,19 @@ function PokemonDetailItem() {
           </View>
 
           <View style={styles.btnContainer}>
-            <TouchableOpacity
-              style={styles.catchBtn}
-              onPress={() => catchPokemon(pokemonData)}>
-              <Image
-                source={require("../assets/images/pokeball.png")}
-                style={{ resizeMode: "contain", height: 100, width: 100 }}
-              />
-              <Text style={styles.catchText}>CATCH</Text>
-            </TouchableOpacity>
+            {isCaught ? (
+              <Text>ADD TO BATTLE LINE UP</Text>
+            ) : (
+              <TouchableOpacity
+                style={styles.catchBtn}
+                onPress={() => catchPokemon(pokemonData)}>
+                <Image
+                  source={require("../../assets/images/pokeball.png")}
+                  style={{ resizeMode: "contain", height: 100, width: 100 }}
+                />
+                <Text style={styles.catchText}>CATCH</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       )}

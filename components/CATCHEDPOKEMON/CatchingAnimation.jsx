@@ -1,27 +1,33 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useContext } from "react";
-import CatchedResult from "./CatchedResult";
-import { Context } from "../contextApi";
 
-const CatchingAnimation = ({ pokemonName, pokemonImage }) => {
+import { Context } from "../../contextApi";
+import CatchedResult from "./CatchedResult";
+
+const CatchingAnimation = ({ pokemonName, pokemonImage, pokemonData }) => {
   const { gotResult, catching } = useContext(Context);
   return (
     <View style={styles.catchingAnimationContainer}>
-      <Image
-        style={styles.catchingAnimationImage}
-        source={require("../assets/images/catch_animation.gif")}
-      />
-      <Text
-        style={
-          styles.catchingAnimationText
-        }>{`CATCHING ${pokemonName.toUpperCase()}....`}</Text>
+      {!catching ? null : (
+        <>
+          <Image
+            style={styles.catchingAnimationImage}
+            source={require("../../assets/images/catch_animation.gif")}
+          />
+          <Text
+            style={
+              styles.catchingAnimationText
+            }>{`CATCHING ${pokemonName.toUpperCase()}....`}</Text>
+        </>
+      )}
 
-      {/* CATCH RESULT MODAL */}
+      {/* CATCH RESULT SCREEN */}
       {catching ? (
         !gotResult ? null : (
           <CatchedResult
             pokemonName={pokemonName}
             pokemonImage={pokemonImage}
+            pokemonData={pokemonData}
           />
         )
       ) : null}

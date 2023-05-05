@@ -1,11 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, Image, Text, StyleSheet } from "react-native";
-import { Context } from "../contextApi";
+
 import { useContext } from "react";
+import { Context } from "../../contextApi";
 
 function PokeDexItem(props) {
   const { pokemonName, pokemonImage, pokemonData } = props;
-  const { getPokemonDescription } = useContext(Context);
+  const { getPokemonDescription, pokemonAlreadyCaught } = useContext(Context);
 
   const navigation = useNavigation();
 
@@ -15,6 +16,7 @@ function PokeDexItem(props) {
       style={styles.flatListContainer}
       onPress={() => {
         getPokemonDescription(pokemonData.id);
+        pokemonAlreadyCaught(pokemonData);
         navigation.navigate("pokemonDetail", {
           pokemonData,
           pokemonName,
