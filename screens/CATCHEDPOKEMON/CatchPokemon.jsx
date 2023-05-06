@@ -17,6 +17,7 @@ export default function CatchedPokemon() {
           <CatchedPokemonItem
             pokemonName={item.name}
             pokemonImage={item.sprites.other.home.front_default}
+            pokemonData={item}
           />
         )}
         keyExtractor={(item) => item.id}
