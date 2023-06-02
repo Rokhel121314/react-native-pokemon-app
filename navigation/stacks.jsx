@@ -14,13 +14,13 @@ const Stacks = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
-          component={LoginScreen}
+          name="Register"
+          component={RegistrationScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Register"
-          component={RegistrationScreen}
+          name="Login"
+          component={LoginScreen}
           options={{ headerShown: false }}
         />
 

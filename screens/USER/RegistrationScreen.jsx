@@ -9,8 +9,16 @@ import {
   Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import useAuthentication from "../../hooks/useAuthentication";
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { registerUser, verifyUserLoggedIn } = useAuthentication();
+
+  useEffect(() => {
+    verifyUserLoggedIn();
+  }, []);
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
       <View style={styles.logoContainer}>
@@ -22,14 +30,23 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <Text style={styles.headerText}>TRAINER REGISTRATION</Text>
         <View style={styles.textInputContainer}>
-          <TextInput style={styles.textInput} placeholder="Email" />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
           <TextInput
             style={styles.textInput}
             placeholder="Password"
             secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => registerUser(email, password)}>
           <Text style={styles.loginButtonText}>REGISTER</Text>
         </TouchableOpacity>
         <View style={styles.otherLoginContainer}>

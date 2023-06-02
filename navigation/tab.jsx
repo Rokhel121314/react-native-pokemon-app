@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, Image, StyleSheet } from "react-native";
+import { getHeaderTitle } from "@react-navigation/elements";
 
 // screens
 import PokeDex from "../screens/POKEDEX/PokeDex";
 import CatchedPokemon from "../screens/CATCHEDPOKEMON/CatchPokemon";
 import PokemonLineUp from "../screens/POKEMONLINEUP/PokemonLineUp";
+import MyHeader from "../components/Logout";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +48,12 @@ function Tabs() {
               </Text>
             </View>
           ),
-          headerTitle: "MY POKEMON",
+
+          header: ({ navigation, route, options }) => {
+            const title = "MY POKEMONS";
+
+            return <MyHeader title={title} style={options.headerStyle} />;
+          },
         }}
       />
 
