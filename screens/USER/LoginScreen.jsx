@@ -10,11 +10,13 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import useAuthentication from "../../hooks/useAuthentication";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { verifyUserLoggedIn, loginUser } = useAuthentication();
+  const navigation = useNavigation();
 
   useEffect(() => {
     verifyUserLoggedIn();
@@ -73,6 +75,12 @@ const LoginScreen = () => {
               />
             </Pressable>
           </View>
+        </View>
+        <View style={styles.toRegisterContainer}>
+          <Text style={styles.toRegisterText}>Dont have an account? </Text>
+          <Pressable onPress={() => navigation.navigate("Register")}>
+            <Text style={styles.linkText}>Register here</Text>
+          </Pressable>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -155,5 +163,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 1,
     borderRadius: 19,
+  },
+  toRegisterContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+  },
+  toRegisterText: {
+    color: "#fff",
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    color: "#fff",
+    fontWeight: 600,
   },
 });
