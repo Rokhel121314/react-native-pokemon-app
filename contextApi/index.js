@@ -139,6 +139,12 @@ function PokemonContext({ children }) {
       catchedPokemonList.map((pokemon) => pokemon.id).includes(pokemonData.id)
     );
   };
+
+  const setPokemonFree = (id) => {
+    setCatchPokemonList(
+      catchedPokemonList.filter((pokemon) => pokemon.id !== id)
+    );
+  };
   return (
     <Context.Provider
       value={{
@@ -161,6 +167,7 @@ function PokemonContext({ children }) {
         catchedPokemonList,
         pokemonAlreadyCaught,
         isCaught,
+        setPokemonFree,
       }}>
       {children}
     </Context.Provider>

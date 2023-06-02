@@ -62,7 +62,7 @@ function PokemonDetailItem() {
                   source={require("../../assets/images/pokeball.png")}
                   style={{ resizeMode: "contain", height: 100, width: 100 }}
                 />
-                <Text style={styles.catchText}>CATCH</Text>
+                {/* <Text style={styles.catchText}>CATCH</Text> */}
               </TouchableOpacity>
             )}
           </View>
