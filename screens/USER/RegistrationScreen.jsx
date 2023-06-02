@@ -74,6 +74,12 @@ const LoginScreen = () => {
             </Pressable>
           </View>
         </View>
+        <View style={styles.toRegisterContainer}>
+          <Text style={styles.toRegisterText}>Already have an account? </Text>
+          <Pressable onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.linkText}>Log in here</Text>
+          </Pressable>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
@@ -156,5 +162,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 1,
     borderRadius: 19,
+  },
+  toRegisterContainer: {
+    flexDirection: "row",
+    marginTop: 20,
+  },
+  toRegisterText: {
+    color: "#fff",
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    color: "#fff",
+    fontWeight: 600,
   },
 });
